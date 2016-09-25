@@ -26,7 +26,7 @@ TBitField::TBitField(const TBitField &bf) // конструктор копиро
 
 TBitField::~TBitField()
 {
-	delete pMem;
+	delete [] pMem;
 	pMem = NULL;
 }
 
