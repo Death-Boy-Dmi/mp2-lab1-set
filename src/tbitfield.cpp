@@ -7,9 +7,11 @@
 
 #include "tbitfield.h"
 
-TBitField::TBitField(int len) : BitLen(len)
+TBitField::TBitField(int len) 
 {
-	MemLen = (len + 15) >> 4;
+	if (len <= 0 && len >= INT32_MAX)
+	BitLen = len;
+	MemLen = (len + 31) >> 5;
 	pMem = new TELEM[MemLen];
 	if (pMem != NULL)
 		for (int i = 0; i < MemLen; i++) pMem[i] = 0;
