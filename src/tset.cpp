@@ -9,8 +9,6 @@
 
 TSet::TSet(int mp) : BitField(mp)
 {
-	if (mp <= 0)
-		throw mp;
 	MaxPower = mp;
 }
 
