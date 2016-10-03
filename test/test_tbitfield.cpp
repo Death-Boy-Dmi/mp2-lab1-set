@@ -1,6 +1,45 @@
 #include "tbitfield.h"
-
+#include "tset.h"
 #include <gtest.h>
+
+TEST(TBitfield, double_clear_bit)
+{
+	TBitField bf(10);
+	bf.ClrBit(5);
+	bf.ClrBit(5);
+	EXPECT_EQ(0, bf.GetBit(5));
+}
+
+TEST(TSet, can_plus_three_sets_in_one_line)
+{
+	const int size = 6;
+	TSet s1(size), s2(size), s3(size), s4(size), s0(size);
+	for (int i = 0; i < size; i++) s0.InsElem(i);	//111111
+	s1.InsElem(1);
+	s1.InsElem(3);									//010100
+	s2.InsElem(0);
+	s2.InsElem(2);									//101000
+	s3.InsElem(4);
+	s3.InsElem(5);									//000011
+	s4 = s1 + s2 + s3;								//111111
+	for (int i = 0; i < size; i++)	EXPECT_EQ(s0.IsMember(i), s4.IsMember(i));
+}
+
+TEST(TBitField, three_bit_fields_in_one_line)
+{
+	const int size = 6;
+	TBitField bf1(size), bf2(size), bf3(size), bf4(size), bf0(size);
+	for (int i = 0; i < size; i++)	bf0.SetBit(i);	//111111
+
+	bf1.SetBit(1);
+	bf1.SetBit(3);			                        //010100
+	bf2.SetBit(0);
+	bf2.SetBit(2);					                //101000
+	bf3.SetBit(4);
+	bf3.SetBit(5);									//000011
+	bf4 = bf1 | bf2 | bf3;							//111111
+	for (int i = 0; i < size; i++)	EXPECT_EQ(bf0.GetBit(i), bf4.GetBit(i));
+}
 
 TEST(TBitField, can_create_bitfield_with_positive_length)
 {
