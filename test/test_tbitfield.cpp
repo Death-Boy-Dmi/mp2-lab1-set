@@ -2,6 +2,30 @@
 
 #include <gtest.h>
 
+TEST(TBitfield, double_clear_bit)
+{
+	TBitField bf(10);
+	bf.ClrBit(5);
+	bf.ClrBit(5);
+	EXPECT_EQ(0, bf.GetBit(5));
+}
+
+TEST(TBitField, three_bit_fields_in_one_line)
+{
+	const int size = 6;
+	TBitField bf1(size), bf2(size), bf3(size), bf4(size), bf0(size);
+	for (int i = 0; i < size; i++)	bf0.SetBit(i);	//111111
+
+	bf1.SetBit(1);
+	bf1.SetBit(3);			                        //010100
+	bf2.SetBit(0);
+	bf2.SetBit(2);					                //101000
+	bf3.SetBit(4);
+	bf3.SetBit(5);									//000011
+	bf4 = bf1 | bf2 | bf3;							//111111
+	for (int i = 0; i < size; i++)	EXPECT_EQ(bf0.GetBit(i), bf4.GetBit(i));
+}
+
 TEST(TBitField, can_create_bitfield_with_positive_length)
 {
   ASSERT_NO_THROW(TBitField bf(3));

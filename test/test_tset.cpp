@@ -2,6 +2,21 @@
 
 #include <gtest.h>
 
+TEST(TSet, can_plus_three_sets_in_one_line)
+{
+	const int size = 6;
+	TSet s1(size), s2(size), s3(size), s4(size), s0(size);
+	for (int i = 0; i < size; i++) s0.InsElem(i);	//111111
+	s1.InsElem(1);
+	s1.InsElem(3);									//010100
+	s2.InsElem(0);
+	s2.InsElem(2);									//101000
+	s3.InsElem(4);
+	s3.InsElem(5);									//000011
+	s4 = s1 + s2 + s3;								//111111
+	for (int i = 0; i < size; i++)	EXPECT_EQ(s0.IsMember(i), s4.IsMember(i));
+}
+
 TEST(TSet, can_get_max_power_set)
 {
   const int size = 5;
