@@ -84,7 +84,8 @@ TSet TSet::operator+(const int Elem) // объединение с элемент
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
-	TSet temp(BitField & Elem);
+	TSet temp(BitField);
+	temp.DelElem(Elem);
 	return temp;
 }
 
